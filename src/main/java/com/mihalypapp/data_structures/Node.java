@@ -1,7 +1,7 @@
 package com.mihalypapp.data_structures;
 
-public class LinkedList {
+public interface Node {
 
-	
+	String getString();
 	
 }
