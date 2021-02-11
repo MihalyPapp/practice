@@ -31,13 +31,19 @@ public class DynamicArray<T> implements Iterable<T> {
 	}
 	
 	public void add(int pos, T data) {
-		if (count == size)
+		if (count == size || pos > count) {
 			doublesTheArraySize();
-		for(int i = pos; i < count; i++) {
-			array[i + 1] = array[i];
+			while(size < pos + 1)
+				doublesTheArraySize();
+		}
+		for(int i = count; i > pos; i--) {
+			array[i] = array[i - 1];
 		}
 		array[pos] = data;
-		count++;
+		if(pos >= count)
+			count = pos + 1;
+		else
+			count++;
 	}
 
 	public T get(int i) {
@@ -56,7 +62,7 @@ public class DynamicArray<T> implements Iterable<T> {
 	}
 
 	public void removeAt(int pos) {
-		if (count == 0 || pos >= count)
+		if (count == 0 || pos >= count || pos < 0)
 			IndexOutOfBoundsExceptionAt(pos);
 
 		for (int i = pos; i < count - 1; i++) {
@@ -112,14 +118,10 @@ public class DynamicArray<T> implements Iterable<T> {
 
 		return iterator;
 	}
-	
-	@Override
-    /* Overriding finalize method to check which object 
-    is garbage collected */
-    protected void finalize() throws Throwable  
-    { 
-        // will print name of object 
-        System.out.println(" successfully garbage collected"); 
-    } 
+
+	public T[] getArray() {
+		shrinkTheArraySize();
+		return this.array;
+	} 
 
 }
