@@ -35,26 +35,29 @@ public class SinglyLinkedListApp {
 		SinglyLinkedList list2 = new SinglyLinkedList();
 		list2.add("a");
 		list2.add("b");
-		list2.add("a");
+		list2.add("c");
 		list2.add("d");
-		list2.add("a");
-		list2.add("b");
-		list2.add("a");
+		list2.add("e");
+		list2.add("f");
+		list2.add("g");
 		list2.print();
 		System.out.println("isPalindrome: " + list2.isPalindrome());
 		System.out.println("size: " + list2.size());
 		System.out.println("Middle element: " + list2.getMiddleNode());
 		System.out.println("hasLoop: " + list2.hasLoop());
+		list2.pairwiseSwap();
+		list2.print();
 		list2.removeDuplicates();
+		list2.swap(0, list2.size() - 1);
 		list2.print();
 		System.out.println("\n-----");
 		
 		SinglyLinkedList list3 = new SinglyLinkedList();
-		SinglyLinkedNode node1 = list3.new SinglyLinkedNode("1");
-		SinglyLinkedNode node2 = list3.new SinglyLinkedNode("2");
-		SinglyLinkedNode node3 = list3.new SinglyLinkedNode("3");
-		SinglyLinkedNode node4 = list3.new SinglyLinkedNode("4");
-		SinglyLinkedNode node5 = list3.new SinglyLinkedNode("5");
+		SinglyLinkedNode node1 = new SinglyLinkedNode("1");
+		SinglyLinkedNode node2 = new SinglyLinkedNode("2");
+		SinglyLinkedNode node3 = new SinglyLinkedNode("3");
+		SinglyLinkedNode node4 = new SinglyLinkedNode("4");
+		SinglyLinkedNode node5 = new SinglyLinkedNode("5");
 		node1.setNode(node2);
 		node2.setNode(node3);
 		node3.setNode(node4);		// 1->2->3->4->5
@@ -62,6 +65,30 @@ public class SinglyLinkedListApp {
 		node5.setNode(node2);
 		list3.setHead(node1);
 		System.out.println("hasLoop: " + list3.hasLoop());
+		
+		SinglyLinkedList list4 = new SinglyLinkedList();
+		list4.addLast("f", 10, 100);
+		list4.addLast("b", 12, 20);
+		list4.addLast("g", 10, 160);
+		list4.addLast("t", 12, 25);
+		System.out.println(list4.getMaxWeigthGivenReps(list4.getHead(), 12));
+		
+		SinglyLinkedList a = new SinglyLinkedList();
+		a.add("1");
+		a.add("2");
+		a.add("4");
+		a.add("8");
+		a.add("10");
+		a.print();
+		SinglyLinkedList b = new SinglyLinkedList();
+		b.add("1");
+		b.add("3");
+		b.add("5");
+		b.add("7");
+		b.add("9");
+		b.print();
+		SinglyLinkedList c = SinglyLinkedList.merge(a, b);
+		c.print();
 	}
 
 }

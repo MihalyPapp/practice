@@ -31,11 +31,12 @@ public class DynamicArray<T> implements Iterable<T> {
 	}
 	
 	public void add(int pos, T data) {
-		if (count == size || pos > count) {
+		if (count == size) {
 			doublesTheArraySize();
-			while(size < pos + 1)
-				doublesTheArraySize();
 		}
+		while(size < pos + 1)
+			doublesTheArraySize();
+		
 		for(int i = count; i > pos; i--) {
 			array[i] = array[i - 1];
 		}
