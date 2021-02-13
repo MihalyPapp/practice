@@ -1,7 +1,5 @@
 package com.mihalypapp.data_structures;
 
-import com.mihalypapp.data_structures.SinglyLinkedList.SinglyLinkedNode;
-
 public class SinglyLinkedListApp {
 
 	public static void main(String[] args) {
@@ -13,8 +11,8 @@ public class SinglyLinkedListApp {
 		list.addLast("Fourth");
 		list.remove("something");
 		list.add("Fifth");
-		list.add(4, "AddAt");
-		list.add(0, "AddAt");
+		list.addAt(4, "AddAt");
+		list.addAt(0, "AddAt");
 		//list.delete("AddAt");
 		//list.remove("AddAt");
 		list.addLast("last");
@@ -22,8 +20,8 @@ public class SinglyLinkedListApp {
 		//list.removeDuplicates();
 		list.print();
 		
-		SinglyLinkedNode node = list.contains("Fifth");
-		System.out.println(node.getString());
+		SinglyLinkedList.Node node = list.contains("Fifth");
+		System.out.println(node.getData());
 		
 		String[] array = list.toArray();
 		for(int i = 0; i < array.length; i++) {
@@ -53,11 +51,11 @@ public class SinglyLinkedListApp {
 		System.out.println("\n-----");
 		
 		SinglyLinkedList list3 = new SinglyLinkedList();
-		SinglyLinkedNode node1 = new SinglyLinkedNode("1");
-		SinglyLinkedNode node2 = new SinglyLinkedNode("2");
-		SinglyLinkedNode node3 = new SinglyLinkedNode("3");
-		SinglyLinkedNode node4 = new SinglyLinkedNode("4");
-		SinglyLinkedNode node5 = new SinglyLinkedNode("5");
+		SinglyLinkedList.Node node1 = new SinglyLinkedList.Node("1");
+		SinglyLinkedList.Node node2 = new SinglyLinkedList.Node("2");
+		SinglyLinkedList.Node node3 = new SinglyLinkedList.Node("3");
+		SinglyLinkedList.Node node4 = new SinglyLinkedList.Node("4");
+		SinglyLinkedList.Node node5 = new SinglyLinkedList.Node("5");
 		node1.setNode(node2);
 		node2.setNode(node3);
 		node3.setNode(node4);		// 1->2->3->4->5

@@ -5,14 +5,14 @@ import java.util.Stack;
 
 public class SinglyLinkedList {
 
-	private SinglyLinkedNode head;
+	private Node head;
 
 	public void addFirst(String string) {
-		SinglyLinkedNode newNode = new SinglyLinkedNode(string);
-		newNode.node = head;
+		Node newNode = new Node(string);
+		newNode.next = head;
 		head = newNode;
 	}
-
+	
 	public void add(String string) {
 		addLast(string);
 	}
@@ -22,45 +22,32 @@ public class SinglyLinkedList {
 	}
 	
 	public void addLast(String string) {
-		SinglyLinkedNode newNode = new SinglyLinkedNode(string);
+		Node newNode = new Node(string);
 		addLast(newNode);
 	}
 	
 	public void addLast(String string, int reps, int weight) {
-		SinglyLinkedNode newNode = new SinglyLinkedNode(string, reps, weight);
+		Node newNode = new Node(string, reps, weight);
 		addLast(newNode);
 	}
 	
-	public void addLast(SinglyLinkedNode newNode) {
+	public void addLast(Node newNode) {
 
 		if (head == null) {
 			head = newNode;
 			return;
 		}
 
-		SinglyLinkedNode last = head;
-		while (last.node != null) {
-			last = last.node;
+		Node last = head;
+		while (last.next != null) {
+			last = last.next;
 		}
 
-		last.node = newNode;
-	}
-		
-	public int getMaxWeigthGivenReps(SinglyLinkedNode list, int givenReps) {
-		if(list == null) return -1;
-		int maxWeight = 0;
-		SinglyLinkedNode current = list.getNext();
-		while(current != null) {
-			if(current.getWeight() > maxWeight && current.getReps() == givenReps) {
-				maxWeight = current.getWeight();
-			}
-			current = current.getNext();
-		}
-		return maxWeight;
+		last.next = newNode;
 	}
 
-	public void add(int pos, String string) {
-		SinglyLinkedNode newNode = new SinglyLinkedNode(string);
+	public void addAt(int pos, String string) {
+		Node newNode = new Node(string);
 
 		if (head == null && pos > 0) {
 			throw new ArrayIndexOutOfBoundsException();
@@ -71,91 +58,91 @@ public class SinglyLinkedList {
 			return;
 		}
 
-		SinglyLinkedNode current = head;
-		SinglyLinkedNode previous = null;
+		Node current = head;
+		Node previous = null;
 		int i = 0;
 
 		while (i < pos) {
 			if (pos - i == 1) {
 				previous = current;
 			}
-			current = current.node;
+			current = current.next;
 			i++;
 		}
 
-		newNode.node = current;
-		previous.node = newNode;
+		newNode.next = current;
+		previous.next = newNode;
 	}
 
 	public int size() {
-		SinglyLinkedNode current = head;
+		Node current = head;
 		int size = 0;
 		while (current != null) {
 			size++;
-			current = current.node;
+			current = current.next;
 		}
 		return size;
 	}
 
 	public String getMiddleNode() {
 		int i = 0;
-		SinglyLinkedNode current = head;
-		SinglyLinkedNode middle = head;
+		Node current = head;
+		Node middle = head;
 		while (current != null) {
 			if (i % 2 == 1) {
-				middle = middle.node;
+				middle = middle.next;
 			}
 			++i;
-			current = current.node;
+			current = current.next;
 		}
 		return middle.data;
 	}
 
-	public SinglyLinkedNode contains(String string) {
-		SinglyLinkedNode current = head;
+	public Node contains(String string) {
+		Node current = head;
 		while (current != null) {
 			if (current.data.equals(string)) {
 				return current;
 			}
-			current = current.node;
+			current = current.next;
 		}
 		return null;
 	}
 
 	public void remove(String string) {
-		SinglyLinkedNode current = head;
-		SinglyLinkedNode previous = null;
+		Node current = head;
+		Node previous = null;
 
 		if (head != null && head.data.equals(string)) {
-			head = head.node;
+			head = head.next;
 			return;
 		}
 
 		while (current != null && !current.data.equals(string)) {
 			previous = current;
-			current = current.node;
+			current = current.next;
 			;
 		}
 
-		if (previous.node == null)
+		if (previous.next == null)
 			return;
 
-		previous.node = current.node;
+		previous.next = current.next;
 	}
 
 	public String[] toArray() {
 		int length = 0;
-		SinglyLinkedNode current = head;
+		Node current = head;
 		while (current != null) {
 			length++;
-			current = current.node;
+			current = current.next;
 		}
 		String[] array = new String[length];
 		int i = 0;
 		current = head;
 		while (current != null) {
 			array[i] = current.data;
-			current = current.node;
+			current = current.next;
 			i++;
 		}
 		return array;
@@ -163,10 +150,10 @@ public class SinglyLinkedList {
 
 	public boolean isPalindrome() {
 		Stack<String> stack = new Stack<>();
-		SinglyLinkedNode current = head;
+		Node current = head;
 		while (current != null) {
 			stack.push(current.data);
-			current = current.node;
+			current = current.next;
 		}
 		current = head;
 		while (current != null) {
@@ -174,31 +161,31 @@ public class SinglyLinkedList {
 					.equals(current.data)) {
 				return false;
 			}
-			current = current.node;
+			current = current.next;
 		}
 
 		return true;
 	}
 
 	public void print() {
-		SinglyLinkedNode current = head;
+		Node current = head;
 		while (current != null) {
 			System.out.print(current.data + ", ");
-			current = current.node;
+			current = current.next;
 		}
 		System.out.println();
 	}
 
 	public boolean hasLoop() {
-		if (head == null || head.node == null)
+		if (head == null || head.next == null)
 			return false;
-		SinglyLinkedNode slow = head;
-		SinglyLinkedNode fast = head;
+		Node slow = head;
+		Node fast = head;
 		while (fast != null) {
-			slow = slow.node;
-			fast = fast.node;
+			slow = slow.next;
+			fast = fast.next;
 			if (fast != null)
-				fast = fast.node;
+				fast = fast.next;
 			if (slow == fast)
 				return true;
 		}
@@ -207,26 +194,26 @@ public class SinglyLinkedList {
 
 	public void removeDuplicates() {
 		HashSet<String> hashSet = new HashSet<>();
-		SinglyLinkedNode current = head;
-		SinglyLinkedNode previous = null;
+		Node current = head;
+		Node previous = null;
 		while (current != null) {
 			if (!hashSet.contains(current.data)) {
 				hashSet.add(current.data);
 				previous = current;
 			} else {
-				previous.node = current.node;
+				previous.next = current.next;
 			}
-			current = current.node;
+			current = current.next;
 		}
 	}
 
 	public void swap(int pos1, int pos2) {
 		int i = 0;
-		SinglyLinkedNode current = head;
-		SinglyLinkedNode node1 = null;
-		SinglyLinkedNode node1_prev = null;
-		SinglyLinkedNode node2 = null;
-		SinglyLinkedNode node2_prev = null;
+		Node current = head;
+		Node node1 = null;
+		Node node1_prev = null;
+		Node node2 = null;
+		Node node2_prev = null;
 		while (current != null) {
 			if (i == pos1 - 1)
 				node1_prev = current;
@@ -236,7 +223,7 @@ public class SinglyLinkedList {
 				node2_prev = current;
 			if (i == pos2)
 				node2 = current;
-			current = current.node;
+			current = current.next;
 			i++;
 		}
 		if (node1 == null || node2 == null)
@@ -246,108 +233,120 @@ public class SinglyLinkedList {
 		if (node1_prev == null)
 			head = node2;
 		else
-			node1_prev.node = node2;
+			node1_prev.next = node2;
 
 		if (node2_prev == null)
 			head = node1;
 		else
-			node2_prev.node = node1;
+			node2_prev.next = node1;
 
-		SinglyLinkedNode temp = node1.node;
-		node1.node = node2.node;
-		node2.node = temp;
+		Node temp = node1.next;
+		node1.next = node2.next;
+		node2.next = temp;
 	}
 	
 	public void pairwiseSwap() {
-		if (head == null || head.node == null)
+		if (head == null || head.next == null)
 			return;
-		SinglyLinkedNode previous = head;
-		SinglyLinkedNode current = head.node;
+		Node previous = head;
+		Node current = head.next;
 		head = current;
 		while (current != null) {
-			SinglyLinkedNode temp = current.node;
-			current.node = previous;
-			if(temp.node == null) {
-				previous.node = temp;
+			Node temp = current.next;
+			current.next = previous;
+			if(temp.next == null) {
+				previous.next = temp;
 				break;
 			}
-			previous.node = temp.node;
+			previous.next = temp.next;
 			previous = temp;
-			current = previous.node;
+			current = previous.next;
 		}
 	}
 	
 	public static SinglyLinkedList merge(SinglyLinkedList a, SinglyLinkedList b) {
 		SinglyLinkedList resultList = new SinglyLinkedList();
-		SinglyLinkedNode node1 = a.getHead();
-		SinglyLinkedNode node2 = b.getHead();
-		SinglyLinkedNode result = new SinglyLinkedNode();
+		Node node1 = a.getHead();
+		Node node2 = b.getHead();
+		Node result = new Node();
 		resultList.setHead(result);
 		while(node1 != null || node2 != null) {
 			if(node1 == null) {
-				result.node = node2;
+				result.next = node2;
 				break;
 			}
 			if(node2 == null) {
-				result.node = node1;
+				result.next = node1;
 				break;
 			}
 			
-			if(Integer.valueOf(node1.getString()) <= Integer.valueOf(node2.getString())) {
-				result.node = node1;
-				node1 = node1.node;
+			if(Integer.valueOf(node1.getData()) <= Integer.valueOf(node2.getData())) {
+				result.next = node1;
+				node1 = node1.next;
 			} else {
-				result.node = node2;
-				node2 = node2.node;
+				result.next = node2;
+				node2 = node2.next;
 			}
-			result = result.node;
+			result = result.next;
 		}
-		resultList.setHead(resultList.getHead().node);
+		resultList.setHead(resultList.getHead().next);
 		return resultList;
 	}
+	
+	public int getMaxWeigthGivenReps(Node list, int givenReps) {
+		if(list == null) return -1;
+		int maxWeight = 0;
+		Node current = list.getNext();
+		while(current != null) {
+			if(current.getWeight() > maxWeight && current.getReps() == givenReps) {
+				maxWeight = current.getWeight();
+			}
+			current = current.getNext();
+		}
+		return maxWeight;
+	}
 
-	public SinglyLinkedNode getHead() {
+	public Node getHead() {
 		return head;
 	}
 
-	public void setHead(SinglyLinkedNode head) {
+	public void setHead(Node head) {
 		this.head = head;
 	}
 
-	static class SinglyLinkedNode implements Node, TrainingDairy {
+	static class Node implements TrainingDairy {
 
 		private int reps;
 		private int weigth;
 		private String data;
-		private SinglyLinkedNode node;
+		private Node next;
 		
-		public SinglyLinkedNode getNext() {
-			return node;
+		public Node getNext() {
+			return next;
 		}
 		
-		public SinglyLinkedNode() {
-			this.node = null;
+		public Node() {
+			this.next = null;
 		}
 		
-		public SinglyLinkedNode(String data) {
+		public Node(String data) {
 			this.data = data;
-			this.node = null;
+			this.next = null;
 		}
 		
-		public SinglyLinkedNode(String data, int reps, int weight) {
+		public Node(String data, int reps, int weight) {
 			this.data = data;
 			this.reps = reps;
 			this.weigth = weight;
-			this.node = null;
+			this.next = null;
 		}
 
-		@Override
-		public String getString() {
+		public String getData() {
 			return this.data;
 		}
 
-		public void setNode(SinglyLinkedNode node) {
-			this.node = node;
+		public void setNode(Node node) {
+			this.next = node;
 		}
 
 		@Override
