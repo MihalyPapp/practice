@@ -114,21 +114,19 @@ public class DoublyLinkedList {
 		
 		if(nodeFromLeft == null || nodeFromLeft == nodeFromRight) return;
 		
+		Node temp1 = nodeFromRight.prev;
+		Node temp2 = nodeFromRight.next;
 		if(nodeFromLeft.next == nodeFromRight) {
-			Node temp = nodeFromRight.next;
 			nodeFromRight.prev = nodeFromLeft.prev;
 			nodeFromRight.next = nodeFromLeft;
 			nodeFromLeft.prev = nodeFromRight;
-			nodeFromLeft.next = temp;
+			nodeFromLeft.next = temp2;
 		} else if(nodeFromLeft.prev == nodeFromRight) {
-			Node temp1 = nodeFromRight.prev;
 			nodeFromRight.prev = nodeFromLeft;
 			nodeFromRight.next = nodeFromLeft.next;
 			nodeFromLeft.prev = temp1;
 			nodeFromLeft.next = nodeFromRight;
 		} else if(nodeFromLeft.next != nodeFromRight && nodeFromLeft.prev != nodeFromRight) {
-			Node temp1 = nodeFromRight.prev;
-			Node temp2 = nodeFromRight.next;
 			nodeFromRight.prev = nodeFromLeft.prev;
 			nodeFromRight.next = nodeFromLeft.next;
 			nodeFromLeft.prev = temp1;

@@ -31,9 +31,8 @@ public class DynamicArray<T> implements Iterable<T> {
 	}
 	
 	public void add(int pos, T data) {
-		if (count == size) {
+		if (count == size)
 			doublesTheArraySize();
-		}
 		while(size < pos + 1)
 			doublesTheArraySize();
 		
@@ -48,15 +47,13 @@ public class DynamicArray<T> implements Iterable<T> {
 	}
 
 	public T get(int i) {
-		if (i >= count)
-			IndexOutOfBoundsExceptionAt(i);
+		if (i >= count) IndexOutOfBoundsExceptionAt(i);
 
 		return array[i];
 	}
 
 	public void remove() {
-		if (count == 0)
-			IndexOutOfBoundsExceptionAt(0);
+		if (count == 0) IndexOutOfBoundsExceptionAt(0);
 
 		array[count - 1] = null;
 		count--;
