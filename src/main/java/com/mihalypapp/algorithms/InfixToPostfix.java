@@ -18,6 +18,29 @@ public class InfixToPostfix {
 	private void calculatePostfix() {
 		for (int i = 0; i < infix.length(); i++) {
 			char current = infix.charAt(i);
+			if (Character.isLetter(current)) {
+				postfix += current;
+			} else {
+				if (current == '(') {
+					stack.push(current);
+				} else if (current == ')') {
+					while (!stack.isEmpty() && stack.peek() != '(')
+						postfix += stack.pop();
+					stack.pop();
+				} else {
+					while (!stack.isEmpty() && precedence(current) <= precedence(stack.peek()))
+						postfix += stack.pop();
+					stack.push(current);
+				}
+			}
+		}
+		while (!stack.isEmpty())
+			postfix += stack.pop();
+	}
+	
+	/*private void calculatePostfix2() {
+		for (int i = 0; i < infix.length(); i++) {
+			char current = infix.charAt(i);
 
 			if (Character.isLetterOrDigit(current)) {
 				postfix += current;
@@ -49,7 +72,7 @@ public class InfixToPostfix {
 		while (!stack.isEmpty()) {
 			postfix += stack.pop();
 		}
-	}
+	}*/
 
 	public String getPostfix() {
 		return postfix;
@@ -71,8 +94,10 @@ public class InfixToPostfix {
 	}
 
 	public static void main(String[] args) {
-		String infix = "a+b*(c^d-e)^(f+g*h)-i";
+		//String infix = "a+b*(c^d-e)^(f+g*h)-i"; 	// abcd^e-fgh*+^*+i-
+		String infix = "(a+b/c*(d+e)-f)"; 			// abc/de+*+f-
 		String postfix = new InfixToPostfix(infix).getPostfix();
-		System.out.println(postfix); // abcd^e-fgh*+^*+i-
+		System.out.println(postfix); 
 	}
+
 }
