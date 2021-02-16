@@ -39,6 +39,10 @@ public class StackAsLinkedList {
 		return size;
 	}
 	
+	public boolean isEmpty() {
+		return stack == null;
+	}
+	
 	static class Node {
 		
 		int data;
