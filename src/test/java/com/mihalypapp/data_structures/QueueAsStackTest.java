@@ -5,13 +5,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class QueueTest {
+class QueueAsStackTest {
 
-	Queue queue;
+	QueueAsStack queue;
 	
 	@BeforeEach
 	void init() {
-		queue = new Queue();
+		queue = new QueueAsStack();
 	}
 	
 	@Test

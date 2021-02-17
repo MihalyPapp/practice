@@ -1,11 +1,11 @@
 package com.mihalypapp.data_structures;
 
-public class Queue {
+public class QueueAsStack {
 
 	private StackAsLinkedList stack;
 	private StackAsLinkedList temp;
 	
-	public Queue() {
+	public QueueAsStack() {
 		stack = new StackAsLinkedList();
 		temp = new StackAsLinkedList();
 	}
