@@ -4,13 +4,17 @@ public class HeapSort {
 
 	public static void sort(int[] array) {
 		buildMaxHeap(array);
-		
+
 		for(int i = array.length - 1; i > 0; i--) {
-			int temp = array[i];
-			array[i] = array[0];
-			array[0] = temp;
-			heapify(array, 0, i - 1);
+			swap(array, i, 0);
+			heapify(array, 0, i);
 		}
+	}
+
+	private static void swap(int[] array, int i, int j) {
+		int temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
 	}
  
 	private static void buildMaxHeap(int[] array) {
@@ -29,10 +33,7 @@ public class HeapSort {
 			largest = right;
 		
 		if(largest != i) {
-			int temp = array[i];
-			array[i] = array[largest];
-			array[largest] = temp;
-			
+			swap(array, i, largest);
 			heapify(array, largest, n);
 		}
 	}
