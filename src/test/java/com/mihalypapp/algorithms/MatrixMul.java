@@ -22,6 +22,23 @@ public class MatrixMul {
 		return m3;
 	}
 
+	private static int[][] MatrixMultiplySingleThreadCacheOptimal(int[][] m1, int[][] m2) {
+		assert m1[0].length == m2.length;
+		int l = m1.length;
+		int m = m1[0].length;
+		int n = m2[0].length;
+		int[][] m3 = new int[l][n];
+
+		for (int i = 0; i < l; i++) {
+			for (int k = 0; k < m; k++) {
+				for (int j = 0; j < n; j++) {
+					m3[i][j] += m1[i][k] * m2[k][j];
+				}
+			}
+		}
+		return m3;
+	}
+
 	private static int[][] MatrixMultiplyMultiThread(int[][] m1, int[][] m2) throws InterruptedException {
 		final int l = m1.length;
 		final int m = m2.length;
@@ -36,12 +53,10 @@ public class MatrixMul {
 			Thread thread = new Thread(() -> {
 				final int iMax = Math.min(l, (_chunk + 1) * chunkSize);
 				for (int i = _chunk * chunkSize; i < iMax; i++) {
-					for (int j = 0; j < n; j++) {
-						int sum = 0;
-						for (int k = 0; k < m; k++) {
-							sum += m1[i][k] * m2[k][j];
+					for (int k = 0; k < m; k++) {
+						for (int j = 0; j < n; j++) {
+							m3[i][j] += m1[i][k] * m2[k][j];
 						}
-						m3[i][j] = sum;
 					}
 				}
 			});
@@ -55,7 +70,7 @@ public class MatrixMul {
 
 		return m3;
 	}
-	
+
 	private static int[][] MatrixMultiply_L_N_Thread(int[][] m1, int[][] m2) throws InterruptedException {
 		assert m1[0].length == m2.length;
 		int l = m1.length;
@@ -92,12 +107,17 @@ public class MatrixMul {
 	public static void main(String[] args) throws InterruptedException {
 		// int[][] m1 = { { 1, 2, 3}, {3, 2, 1} };
 		// int[][] m2 = { { 1, 2}, {3, 2}, {4, 5} };
-		int[][] m1 = new int[1000][400];
-		int[][] m2 = new int[400][1000];
-		
+		int[][] m1 = new int[600][600];
+		int[][] m2 = new int[600][600];
+
 		long start = System.currentTimeMillis();
 		MatrixMultiplySingleThread(m1, m2);
 		long finish = System.currentTimeMillis();
+		System.out.println(finish - start);
+
+		start = System.currentTimeMillis();
+		MatrixMultiplySingleThreadCacheOptimal(m1, m2);
+		finish = System.currentTimeMillis();
 		System.out.println(finish - start);
 
 		start = System.currentTimeMillis();
